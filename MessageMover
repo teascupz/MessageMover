@@ -1,0 +1,71 @@
+package com.mycompany.messagemover;
+
+import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+public class MessageMover extends Application {
+    private final Text message = new Text("Welcome!");
+
+    @Override
+    public void start(Stage primaryStage) {
+        // Initialize the text style
+        message.setFill(Color.BLACK);
+
+        // Buttons to move the text
+        Button btnLeft = new Button("←");
+        Button btnRight = new Button("→");
+
+        btnLeft.setOnAction(e -> message.setX(message.getX() - 10));
+        btnRight.setOnAction(e -> message.setX(message.getX() + 10));
+
+        // Radio buttons to change color
+        RadioButton rbRed = new RadioButton("Red");
+        RadioButton rbGreen = new RadioButton("Green");
+        RadioButton rbBlue = new RadioButton("Blue");
+
+        // Group radio buttons
+        ToggleGroup colorGroup = new ToggleGroup();
+        rbRed.setToggleGroup(colorGroup);
+        rbGreen.setToggleGroup(colorGroup);
+        rbBlue.setToggleGroup(colorGroup);
+
+        // Set radio button actions
+        rbRed.setOnAction(e -> message.setFill(Color.RED));
+        rbGreen.setOnAction(e -> message.setFill(Color.GREEN));
+        rbBlue.setOnAction(e -> message.setFill(Color.BLUE));
+
+        // Layout for buttons
+        HBox hboxButtons = new HBox(10, btnLeft, btnRight);
+        hboxButtons.setAlignment(Pos.CENTER);
+
+        // Layout for radio buttons
+        VBox vboxColors = new VBox(10, rbRed, rbGreen, rbBlue);
+        vboxColors.setAlignment(Pos.CENTER);
+
+        // Main layout
+        BorderPane pane = new BorderPane();
+        pane.setCenter(message);
+        pane.setBottom(hboxButtons);
+        pane.setRight(vboxColors);
+
+        // Set the scene
+        Scene scene = new Scene(pane, 400, 200);
+        primaryStage.setTitle("Message Mover");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
